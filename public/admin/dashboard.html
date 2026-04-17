@@ -620,18 +620,24 @@
             } catch(e) {}
 
             endLoad();
-            try {
-                const data = await fetchAPI('/features/schedule');
-                const viewArea = document.getElementById('current-schedule');
-                if (data.schedule_image) viewArea.innerHTML = `<img src="${data.schedule_image}" style="width:100%; height:auto;">`;
-                else viewArea.innerHTML = `<div style="padding:64px; color:var(--text-light);"><i class="ph-bold ph-image-broken" style="font-size:48px; margin-bottom:12px;"></i><br>No schedule uploaded</div>`;
-            } catch(e) {}
-            endLoad();
         }
         async function uploadBackground(e) {
-            e.preventDefault(); const btn = document.getElementById('bg-btn'); btn.disabled = true; btn.innerHTML = '<i class="ph-bold ph-circle-notch ph-spin"></i> Uploading...';
-            const formData = new FormData(); formData.append('bg_image', document.getElementById('bg-file').files[0]);
-            try { await fetch('/api/features/background', { method: 'POST', headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, body: formData }); window.location.reload(); } catch(err) { btn.disabled = false; btn.innerHTML = 'Update Wallpaper'; }
+            e.preventDefault(); 
+            const file = document.getElementById('bg-file').files[0];
+            const btn = document.getElementById('bg-btn'); 
+            btn.disabled = true; 
+            btn.innerHTML = '<i class="ph-bold ph-circle-notch ph-spin"></i> Uploading...';
+            const formData = new FormData(); 
+            formData.append('bg_image', file);
+            try { 
+                await fetchAPI('/features/background', { method: 'POST', body: formData }); 
+                showAlert('success', 'Background Updated!');
+                loadScheduleAdmin();
+            } catch(err) { 
+                showAlert('error', err.message);
+                btn.disabled = false; 
+                btn.innerHTML = '<i class="ph-bold ph-image"></i> Update Wallpaper';
+            }
         }
         async function uploadSchedule(e) {
             e.preventDefault();

@@ -56,6 +56,9 @@ async function repair() {
         // Enrollments Table Repairs
         await addColumnIfNotExists(connection, 'enrollments', 'progress', "INT DEFAULT 0");
 
+        // Announcements Table Repairs
+        await addColumnIfNotExists(connection, 'announcements', 'image_path', "VARCHAR(255)");
+
         console.log('--- Database Schema Repair Completed ---');
         await connection.end();
         process.exit(0);

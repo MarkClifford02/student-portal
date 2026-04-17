@@ -66,7 +66,8 @@ async function repair() {
     } catch (err) {
         console.error('❌ Repair Failed:', err.message);
         if (connection) await connection.end();
-        process.exit(1);
+        console.log('⚠️ Continuing with server startup anyway...');
+        process.exit(0); // Exit gracefully so server can still start
     }
 }
 

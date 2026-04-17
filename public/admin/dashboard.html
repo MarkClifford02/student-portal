@@ -561,10 +561,20 @@
         function showAnnouncementModal() {
             const body = `<div class="form-group"><label>Title</label><input type="text" id="ann-title" class="form-control" required></div><div class="form-group"><label>Content</label><textarea id="ann-content" class="form-control" rows="4" required></textarea></div><div class="form-group"><label>Cover Image</label><input type="file" id="ann-image" class="form-control" accept="image/*"></div>`;
             openModal('Post Announcement', body, async () => {
-                const formData = new FormData(); formData.append('title', document.getElementById('ann-title').value); formData.append('content', document.getElementById('ann-content').value);
-                const file = document.getElementById('ann-image').files[0]; if(file) formData.append('ann_image', file);
-                await fetch('/api/features/announcements', { method: 'POST', headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, body: formData });
-                closeModal(); loadAnnouncements();
+                try {
+                    const formData = new FormData(); 
+                    formData.append('title', document.getElementById('ann-title').value); 
+                    formData.append('content', document.getElementById('ann-content').value);
+                    const file = document.getElementById('ann-image').files[0]; 
+                    if(file) formData.append('ann_image', file);
+                    
+                    await fetchAPI('/features/announcements', { method: 'POST', body: formData });
+                    showAlert('success', 'Announcement posted successfully!');
+                    closeModal(); 
+                    loadAnnouncements();
+                } catch (err) {
+                    showAlert('error', err.message);
+                }
             });
         }
 

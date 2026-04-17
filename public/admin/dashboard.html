@@ -324,9 +324,9 @@
                     }); 
                     closeModal(); 
                     loadSubjects(); 
-                    showAlert(res.message, 'success', 'main-alert'); 
+                    showAlert('success', res.message, 'main-alert'); 
                 } catch(e) { 
-                    showAlert(e.message, 'error', 'modal-alert'); 
+                    showAlert('error', e.message, 'modal-alert'); 
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.textContent = 'Save Changes';
@@ -438,9 +438,9 @@
                         }); 
                         closeModal(); 
                         loadEnrollments(); 
-                        showAlert(res.message, 'success', 'main-alert');
-                    } catch(e) {
-                        showAlert(e.message, 'error', 'modal-alert');
+                        showAlert('success', res.message, 'main-alert');
+                    } catch (err) {
+                        showAlert('error', e.message, 'modal-alert');
                     } finally {
                         submitBtn.disabled = false;
                     }
@@ -520,9 +520,9 @@
                         }); 
                         closeModal(); 
                         loadGrades(); 
-                        showAlert(res.message, 'success', 'main-alert');
+                        showAlert('success', res.message, 'main-alert');
                     } catch(e) {
-                        showAlert(e.message, 'error', 'modal-alert');
+                        showAlert('error', e.message, 'modal-alert');
                     } finally {
                         submitBtn.disabled = false;
                     }
@@ -660,7 +660,7 @@
                 await fetchAPI('/features/schedule', { method: 'POST', body: formData });
                 showAlert('success', 'Weekly Schedule Updated!');
                 loadScheduleAdmin();
-            } catch (err) { showAlert('error', err.message); }
+            } catch (err) { showAlert('error', err.message, 'modal-alert'); }
             finally { btn.innerHTML = '<i class="ph-bold ph-calendar"></i> Upload Weekly'; }
         }
 
@@ -734,7 +734,7 @@
             try { await fetch('/api/features/materials', { method: 'POST', headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }, body: formData }); loadMaterialsAdmin(); } catch(err) { btn.disabled = false; }
         }
 
-        function showAlert(msg, type = 'error', id = 'modal-alert') { const el = document.getElementById(id); el.textContent = msg; el.className = `alert alert-${type === 'error' ? 'error' : 'success'}`; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 5000); }
+        function showAlert(type = 'error', msg = 'An error occurred', id = 'modal-alert') { const el = document.getElementById(id); el.textContent = msg; el.className = `alert alert-${type === 'error' ? 'error' : 'success'}`; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 5000); }
 
         // --- MOBILE SIDEBAR TOGGLE LOGIC ---
         const mobileToggle = document.getElementById('mobile-toggle');

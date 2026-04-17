@@ -22,6 +22,16 @@ async function migrate() {
                     multipleStatements: true
                 };
 
+            console.log('--- Database Connection Info ---');
+            if (process.env.MYSQL_URL) {
+                console.log('Using MYSQL_URL:', process.env.MYSQL_URL);
+            } else {
+                console.log('Using DB_HOST:', config.host);
+                console.log('Using DB_PORT:', config.port);
+                console.log('Using DB_USER:', config.user);
+                console.log('Using DB_NAME:', config.database);
+            }
+            
             connection = await mysql.createConnection(config);
             
             console.log("✅ Connection established. Running migration...");

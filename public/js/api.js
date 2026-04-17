@@ -2,10 +2,16 @@ const API_BASE = '/api';
 
 async function fetchAPI(endpoint, options = {}) {
     try {
+        // Don't set Content-Type for FormData - let browser handle multipart/form-data
+        const headers = {};
+        if (!(options.body instanceof FormData)) {
+            headers['Content-Type'] = 'application/json';
+        }
+        
         const response = await fetch(`${API_BASE}${endpoint}`, {
             ...options,
             headers: {
-                'Content-Type': 'application/json',
+                ...headers,
                 ...options.headers
             }
         });

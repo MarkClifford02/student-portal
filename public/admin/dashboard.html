@@ -548,11 +548,11 @@
                         </div>
                         <div class="data-table-container">
                             <table class="table-premium">
-                                <thead><tr><th>Title</th><th>Date Published</th><th>Author</th></tr></thead>
+                                <thead><tr><th>Image</th><th>Title</th><th>Date Published</th><th>Author</th></tr></thead>
                                 <tbody>
                 `;
-                if(!data.length) html += `<tr><td colspan="3" style="text-align:center; padding:64px;"><i class="ph-bold ph-megaphone-simple" style="font-size:48px; color:var(--text-light); opacity:0.2;"></i><br><span style="color:var(--text-light); font-size:15px;">No announcements published yet.</span></td></tr>`;
-                else data.forEach(row => { html += `<tr><td><strong style="color:var(--primary); font-size:15px;">${row.title}</strong></td><td><span style="color:var(--text-muted); font-weight:600;">${new Date(row.date).toLocaleDateString()}</span></td><td><span class="badge" style="background:rgba(51, 128, 204, 0.08); color:var(--primary); font-weight:700;"><i class="ph-bold ph-user-circle" style="margin-right:4px;"></i> ${row.author || 'Admin'}</span></td></tr>`; });
+                if(!data.length) html += `<tr><td colspan="4" style="text-align:center; padding:64px;"><i class="ph-bold ph-megaphone-simple" style="font-size:48px; color:var(--text-light); opacity:0.2;"></i><br><span style="color:var(--text-light); font-size:15px;">No announcements published yet.</span></td></tr>`;
+                else data.forEach(row => { html += `<tr><td>${row.image_path ? `<img src="${row.image_path}" style="width:48px; height:48px; border-radius:8px; object-fit:cover;">` : `<div style="width:48px; height:48px; border-radius:8px; background:rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center;"><i class="ph-bold ph-image" style="color:var(--text-light)"></i></div>`}</td><td><strong style="color:var(--primary); font-size:15px;">${row.title}</strong></td><td><span style="color:var(--text-muted); font-weight:600;">${new Date(row.date).toLocaleDateString()}</span></td><td><span class="badge" style="background:rgba(51, 128, 204, 0.08); color:var(--primary); font-weight:700;"><i class="ph-bold ph-user-circle" style="margin-right:4px;"></i> ${row.author || 'Admin'}</span></td></tr>`; });
                 html += `</tbody></table></div></div>`;
                 contentArea.innerHTML = html;
                 endLoad();
